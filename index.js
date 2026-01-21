@@ -6,7 +6,13 @@
  * @returns {boolean} whether the wizard can cast the spell
  */
 function canCastSpell(isSpellPrepared, hasScroll) {
-  // TODO
+  if (isSpellPrepared) {
+    return true;
+  }
+  if (hasScroll) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -17,7 +23,7 @@ function canCastSpell(isSpellPrepared, hasScroll) {
  * @returns {boolean} whether the creature is hidden from the observer
  */
 function isHidden(hiding, aware) {
-  // TODO
+  return hiding || !aware;
 }
 
 /**
@@ -28,7 +34,7 @@ function isHidden(hiding, aware) {
  * @returns {boolean} whether the strike hits
  */
 function doesStrikeHit(attack, ac) {
-  // TODO
+  return attack >= ac;
 }
 
 /**
@@ -39,7 +45,7 @@ function doesStrikeHit(attack, ac) {
  * @returns {boolean} whether the strike is a critical hit
  */
 function doesStrikeCrit(attack, ac) {
-  // TODO
+  if ((attack, ac)) return attack >= ac * 10;
 }
 
 /**
@@ -51,7 +57,8 @@ function doesStrikeCrit(attack, ac) {
  * @returns {number} total hit points after healing
  */
 function heal(maxHp, currentHp, healAmount) {
-  // TODO
+  if (hp > maxHp) {return maxHp;
+} else { return currentHp + healAmount;
 }
 
 /**
@@ -71,7 +78,17 @@ function heal(maxHp, currentHp, healAmount) {
  * @returns {number} the character's proficiency bonus
  */
 function getProficiencyBonus(level, rank) {
-  // TODO
+  return rank === "untrained"
+    ? 0
+    : rank === "trained"
+      ? level + 2
+      : rank === "expert"
+        ? level + 4
+        : rank === "master"
+          ? level + 6
+          : rank === "legendary"
+            ? level + 8
+            : 0;
 }
 
 /**
@@ -85,7 +102,13 @@ function getProficiencyBonus(level, rank) {
  * @returns {number} the cover bonus to AC
  */
 function getCoverBonus(behindObstacle, takingCover) {
-  // TODO
+  if (!behindObstacle) {
+    return 0;
+  }
+  if (takingCover) {
+    return 4;
+  }
+  return 2;
 }
 
 /**
@@ -101,7 +124,10 @@ function getCoverBonus(behindObstacle, takingCover) {
  * @returns {number} the creature's remaining HP after taking damage
  */
 function getRemainingHp(maxHp, currentHp, damage) {
-  // TODO
+  if (damage >= maxHp * 2) {
+    return -1;
+  }
+
 }
 
 /**
@@ -113,7 +139,10 @@ function getRemainingHp(maxHp, currentHp, damage) {
  * @returns {boolean} whether the creature can see
  */
 function canSee(light, vision) {
-  // TODO
+  if (light === "bright") return true;
+  if (light === "dim") return vision === "low-light" || vision === "dark";
+  if (light === "dark") return vision === "dark";
+  return false;
 }
 
 /**
@@ -127,5 +156,11 @@ function canSee(light, vision) {
  * @returns {number} damage dealt by the strike
  */
 function getStrikeDamage(attack, ac, damage) {
-  // TODO
+  if (!doesStrikeHit(attack, ac)) {
+    return 0;
+  }
+  if (doesStrikeCrit(attack, ac)) {
+    return damage * 2;
+  }
+  return damage;
 }
